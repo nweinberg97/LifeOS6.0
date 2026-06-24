@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeOS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="route-home">
+
+    <header class="system-header">
+        <div class="header-brand">LifeOS</div>
+        <button class="matrix-trigger" id="matrixTrigger" aria-label="Open Options Matrix">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+    </header>
+
+    <div class="interaction-node-container">
+        <button class="lifeos-primary-btn" id="lifeosBtn" aria-label="Activate LifeOS Engine">
+            <span class="btn-core-pulse"></span>
+        </button>
+        
+        <div class="modal-interaction-pane" id="interactionPane" hidden>
+            <nav class="mode-selector-pill">
+                <button class="mode-pill-btn active" data-mode="chat">Chat</button>
+                <button class="mode-pill-btn" data-mode="voice">Voice</button>
+                <button class="mode-pill-btn" data-mode="command">Command</button>
+            </nav>
+            
+            <div class="pane-content-viewport">
+                <div class="mode-stream-container" id="modeStreamContainer">
+                    <div class="chat-terminal-view" id="chatTerminal">
+                        <div class="terminal-log" id="terminalLog"></div>
+                        <div class="terminal-input-wrapper">
+                            <input type="text" id="terminalInput" placeholder="Synthesize across your workspace..." autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dock-launcher-wrapper" id="dockLauncher">
+        <div class="dock-edge-trigger">
+            <span class="trigger-arrow">◀</span>
+        </div>
+        <nav class="dock-menu-pills">
+            <button class="route-pill active" data-route="home">Home</button>
+            <button class="route-pill" data-route="taskly">Taskly</button>
+            <button class="route-pill" data-route="boardly">Boardly</button>
+            <button class="route-pill" data-route="timely">Timely</button>
+            <button class="route-pill" data-route="brainly">Brainly</button>
+        </nav>
+    </div>
+
+    <div class="global-trash-zone" id="globalTrashZone" role="img" aria-label="Drag elements here to purge storage data">
+        <div class="trash-dashed-ring">
+            <span class="trash-icon">×</span>
+        </div>
+    </div>
+
+    <main class="app-workspace-surface" id="workspaceSurface">
+
+        <section class="view-panel active" id="view-home">
+            <div class="home-foyer-display">
+                <div class="foyer-clock" id="foyerClock">00:00</div>
+                <div class="foyer-metrics" id="foyerMetrics">Systems Normalized. Ready to Execute.</div>
+            </div>
+        </section>
+
+        <section class="view-panel" id="view-taskly">
+            <div class="taskly-pipeline-container">
+                
+                <div class="kanban-column" data-column="todo">
+                    <div class="column-header">
+                        <span class="column-title">To Do</span>
+                        <div class="inline-input-wrapper">
+                            <input type="text" class="column-quick-add" placeholder="+ Add task...">
+                        </div>
+                    </div>
+                    <div class="column-card-stream" id="stream-todo"></div>
+                </div>
+
+                <div class="kanban-column" data-column="inprogress">
+                    <div class="column-header">
+                        <span class="column-title">In Progress</span>
+                        <div class="inline-input-wrapper">
+                            <input type="text" class="column-quick-add" placeholder="+ Add task...">
+                        </div>
+                    </div>
+                    <div class="column-card-stream" id="stream-inprogress"></div>
+                </div>
+
+                <div class="kanban-column" data-column="review">
+                    <div class="column-header">
+                        <span class="column-title">Review</span>
+                        <div class="inline-input-wrapper">
+                            <input type="text" class="column-quick-add" placeholder="+ Add task...">
+                        </div>
+                    </div>
+                    <div class="column-card-stream" id="stream-review"></div>
+                </div>
+
+                <div class="kanban-column" data-column="completed">
+                    <div class="column-header">
+                        <span class="column-title">Completed</span>
+                        <div class="inline-input-wrapper">
+                            <input type="text" class="column-quick-add" placeholder="+ Add task...">
+                        </div>
+                    </div>
+                    <div class="column-card-stream" id="stream-completed"></div>
+                </div>
+
+                <div class="kanban-column" data-column="backlog">
+                    <div class="column-header">
+                        <span class="column-title">Backlog</span>
+                        <div class="inline-input-wrapper">
+                            <input type="text" class="column-quick-add" placeholder="+ Add task...">
+                        </div>
+                    </div>
+                    <div class="column-card-stream" id="stream-backlog"></div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="view-panel" id="view-boardly">
+            <div class="boardly-workspace">
+                <div class="boardly-navigation-pill-strip">
+                    <div class="boardly-tabs-slider" id="boardlyTabsSlider">
+                        </div>
+                </div>
+                <div class="boardly-postit-matrix" id="boardlyPostitMatrix">
+                    </div>
+            </div>
+        </section>
+
+        <section class="view-panel" id="view-timely">
+            <div class="timely-engine-wrapper">
+                
+                <div class="timely-mode-toggle-zone">
+                    <div class="toggle-pill-switch">
+                        <button class="toggle-state-btn active" data-time-mode="schedule">Schedule Mode</button>
+                        <button class="toggle-state-btn" data-time-mode="planning">Planning Mode</button>
+                    </div>
+                </div>
+
+                <div class="timely-view-viewport" id="timelyViewport">
+                    </div>
+
+            </div>
+        </section>
+
+        <section class="view-panel" id="view-brainly">
+            <div class="brainly-canvas-environment" id="brainlyCanvas">
+                
+                <div class="brainly-ingestion-square" id="ingestionSquare">
+                    <div class="ingestion-inner-frame">
+                        <span class="ingestion-icon">📂</span>
+                        <span class="ingestion-label">Drop Links / PDFs</span>
+                    </div>
+                </div>
+
+                <div class="brainly-asset-surface" id="brainlyAssetSurface">
+                    </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <div class="options-matrix-overlay" id="optionsMatrix" hidden>
+        <div class="matrix-card-panel">
+            <h2 class="matrix-heading">Options Matrix</h2>
+            <hr class="matrix-divider">
+            <div class="matrix-settings-grid">
+                </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
