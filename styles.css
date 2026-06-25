@@ -58,10 +58,13 @@ body.home-active .navbar {
     align-items: center;
     gap: 12px;
 }
+
+/* Dynamic Atom Logo Component System */
 .atom-logo {
     display: flex;
     align-items: center;
-    animation: rotateAtom 20s linear infinite;
+    justify-content: center;
+    animation: rotateAtom 24s linear infinite;
 }
 @keyframes rotateAtom { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
@@ -160,8 +163,13 @@ body.home-active .navbar {
     justify-content: space-between;
     align-items: center;
 }
+.ub-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 .ub-header h3 { font-size: 14px; font-weight: 600; }
-.ub-header button { background: none; border: none; font-size: 20px; cursor: pointer; }
+.ub-header > button { background: none; border: none; font-size: 20px; cursor: pointer; }
 .ub-dropzone {
     padding: 16px;
     flex-grow: 1;
@@ -184,13 +192,14 @@ body.home-active .navbar {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 12px 4px;
+    padding: 12px 6px;
     background-color: var(--bg-dark);
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-right: -1px;
 }
 .triangle-pointer {
     width: 0;
@@ -229,6 +238,9 @@ body.home-active .navbar {
     text-align: left;
     transition: var(--transition-smooth);
     min-width: 110px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 .pill-btn:hover {
     background-color: var(--bg-dark);
@@ -257,6 +269,11 @@ body.home-active .navbar {
     margin-bottom: 32px;
 }
 .view-header h2 { font-weight: 600; font-size: 28px; letter-spacing: -0.5px; }
+.header-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
 
 /* Global Button Frameworks */
 .btn-action {
@@ -277,6 +294,29 @@ body.home-active .navbar {
     border: var(--border-light) 1px solid;
 }
 .btn-action.secondary:hover { background-color: rgba(17,17,17,0.02); }
+
+.btn-create-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    background-color: var(--bg-dark);
+    color: var(--bg-white);
+    border: none;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    padding: 0;
+    margin-bottom: -2px;
+}
+.btn-create-circle:hover {
+    background-color: #333333;
+    transform: scale(1.08);
+}
 
 /* Universal Card Architecture Objects */
 .lifeos-card {
@@ -305,7 +345,10 @@ body.home-active .navbar {
 /* View Specific Components: 1. HOME VIEW */
 .hero-section {
     text-align: center;
-    padding: 60px 0;
+    padding: 60px 0 24px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .clock-display {
     font-size: 80px;
@@ -325,11 +368,13 @@ body.home-active .navbar {
 
 .dashboard-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(280px, 420px));
     gap: 32px;
-    margin-top: 24px;
+    margin: 24px auto 0 auto;
+    justify-content: center;
+    width: 100%;
 }
-.dash-col h3 { font-size: 16px; font-weight: 600; margin-bottom: 16px; opacity: 0.9; }
+.dash-col h3 { font-size: 16px; font-weight: 600; margin-bottom: 16px; opacity: 0.9; text-align: left; }
 .dash-card-list { min-height: 200px; }
 
 /* View Specific Components: 2. TASKLY (KANBAN) */
@@ -478,9 +523,11 @@ body.home-active .navbar {
     flex-direction: column;
     align-items: center;
 }
+
+/* Assistant Trigger Button using exact continuous rotating atom style */
 .assistant-trigger {
-    width: 48px;
-    height: 48px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     background: var(--bg-dark);
     color: var(--bg-white);
@@ -490,11 +537,16 @@ body.home-active .navbar {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: var(--transition-smooth);
 }
+.assistant-trigger:hover {
+    transform: scale(1.05);
+}
+
 .assistant-panel {
     position: absolute;
-    bottom: 60px;
-    width: 360px;
+    bottom: 68px;
+    width: 380px;
     background: var(--bg-white);
     border: var(--border-light) 1px solid;
     border-radius: var(--radius-card);
@@ -504,16 +556,66 @@ body.home-active .navbar {
     overflow: hidden;
 }
 .assistant-panel.open { display: flex; }
-.assistant-header { padding: 12px; border-bottom: var(--border-light) 1px solid; display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 600; }
-.assistant-modes { display: flex; gap: 4px; }
-.mode-pill { background: rgba(17,17,17,0.04); border: none; padding: 2px 8px; border-radius: 10px; font-size: 10px; cursor: pointer; }
-.mode-pill.active { background: var(--bg-dark); color: var(--bg-white); }
-.assistant-body { padding: 12px; max-height: 200px; overflow-y: auto; font-size: 12px; min-height: 80px; }
+
+.assistant-header { 
+    padding: 14px 16px; 
+    border-bottom: var(--border-light) 1px solid; 
+    font-size: 13px; 
+    font-weight: 600; 
+    color: var(--bg-dark);
+    letter-spacing: -0.3px;
+}
+
+.assistant-body { padding: 16px; max-height: 240px; overflow-y: auto; font-size: 13px; min-height: 100px; }
 .system-msg { color: #888; font-style: italic; }
-.user-msg { margin-top: 4px; font-weight: 500; }
-.assistant-footer { display: flex; border-top: var(--border-light) 1px solid; }
-.assistant-footer input { flex-grow: 1; border: none; padding: 10px; outline: none; font-size: 12px; }
-#assistantSubmit { background: none; border: none; padding: 0 12px; cursor: pointer; }
+.user-msg { margin-top: 6px; font-weight: 500; }
+
+/* Streamlined Inline Footer Bar Components */
+.assistant-footer { 
+    display: flex; 
+    align-items: center;
+    border-top: var(--border-light) 1px solid; 
+    padding: 8px 12px;
+    background: var(--bg-white);
+    gap: 6px;
+}
+.assistant-footer input { 
+    flex-grow: 1; 
+    border: none; 
+    padding: 8px 4px; 
+    outline: none; 
+    font-size: 13px; 
+    color: var(--bg-dark);
+}
+.assistant-footer input::placeholder {
+    color: #aaa;
+}
+
+/* Modern clean inline icon buttons */
+.assistant-icon-btn {
+    background: none;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #555555;
+    transition: var(--transition-smooth);
+}
+.assistant-icon-btn:hover {
+    background-color: rgba(17, 17, 17, 0.05);
+    color: var(--bg-dark);
+}
+.assistant-icon-btn.submit-btn {
+    color: var(--bg-dark);
+}
+.assistant-icon-btn.submit-btn:hover {
+    background-color: var(--bg-dark);
+    color: var(--bg-white);
+}
 
 /* Modal Elements Overlay window */
 .modal-overlay {
