@@ -13,12 +13,13 @@
 
     <header class="navbar">
         <div class="nav-left">
+            <!-- Top Re-engineered Micro Thin Multi-Ring Atom Logo Container -->
             <div class="atom-logo">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <circle cx="12" cy="12" r="3"></circle>
-                    <ellipse cx="12" cy="12" rx="9" ry="3" transform="rotate(30 12 12)"></ellipse>
-                    <ellipse cx="12" cy="12" rx="9" ry="3" transform="rotate(90 12 12)"></ellipse>
-                    <ellipse cx="12" cy="12" rx="9" ry="3" transform="rotate(150 12 12)"></ellipse>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1">
+                    <circle cx="12" cy="12" r="2"></circle>
+                    <ellipse cx="12" cy="12" rx="9" ry="2.5" transform="rotate(30 12 12)"></ellipse>
+                    <ellipse cx="12" cy="12" rx="8" ry="3" transform="rotate(90 12 12)"></ellipse>
+                    <ellipse cx="12" cy="12" rx="7.5" ry="3.5" transform="rotate(150 12 12)"></ellipse>
                 </svg>
             </div>
             <span class="brand-name">LifeOS</span>
@@ -45,11 +46,13 @@
 
     <div class="universal-board" id="universalBoard">
         <div class="ub-header">
-            <h3>Universal Board Inbox</h3>
+            <div class="ub-header-left">
+                <h3>Universal Board Inbox</h3>
+                <button class="btn-create-circle" onclick="lifecycle.promptCreateCard('universal-board')" title="Create Universal Card">+</button>
+            </div>
             <button id="closeUbBtn">&times;</button>
         </div>
-        <div class="ub-dropzone dropzone" id="ubDropzone" data-container="universal-board">
-            </div>
+        <div class="ub-dropzone dropzone" id="ubDropzone" data-container="universal-board"></div>
     </div>
 
     <main class="app-container" id="appContainer">
@@ -106,8 +109,7 @@
                 <h2>Boardly</h2>
                 <button class="btn-action" id="addBoardlyTabBtn">+ New Category Tab</button>
             </div>
-            <div class="boardly-tabs-bar" id="boardlyTabsBar">
-                </div>
+            <div class="boardly-tabs-bar" id="boardlyTabsBar"></div>
             <div class="boardly-workspace">
                 <div class="boardly-actions">
                     <button class="btn-action" onclick="lifecycle.promptCreateCard('boardly', null, 'goal')">🎯 + Goal</button>
@@ -120,7 +122,10 @@
 
         <section class="view" id="view-timely">
             <div class="view-header">
-                <h2>Timely</h2>
+                <div class="header-title-wrapper">
+                    <h2>Timely</h2>
+                    <button class="btn-create-circle" onclick="lifecycle.promptCreateCard('timely-sched')" title="Create Timely Item">+</button>
+                </div>
                 <div class="toggle-switch">
                     <button class="toggle-btn active" id="timelyModeSched">Scheduling</button>
                     <button class="toggle-btn" id="timelyModePlan">Planning</button>
@@ -134,8 +139,7 @@
                     <button class="sub-tab" data-sub="monthly">Monthly</button>
                     <button class="sub-tab" data-sub="reminders">Reminders</button>
                 </div>
-                <div class="timely-container panel-card dropzone" id="timelySchedZone" data-container="timely-sched">
-                    </div>
+                <div class="timely-container panel-card dropzone" id="timelySchedZone" data-container="timely-sched"></div>
             </div>
 
             <div id="timelyPlanningContent" class="hidden">
@@ -143,8 +147,7 @@
                     <button class="sub-tab active" data-sub="projects">Projects</button>
                     <button class="sub-tab" data-sub="goals">Goals Matrix</button>
                 </div>
-                <div class="timely-container panel-card dropzone" id="timelyPlanZone" data-container="timely-plan">
-                    </div>
+                <div class="timely-container panel-card dropzone" id="timelyPlanZone" data-container="timely-plan"></div>
             </div>
         </section>
 
@@ -172,8 +175,7 @@
                         <div id="foldersList"></div>
                     </div>
                 </div>
-                <div class="brainly-main dropzone" id="brainlyMainZone" data-container="brainly-notes">
-                    </div>
+                <div class="brainly-main dropzone" id="brainlyMainZone" data-container="brainly-notes"></div>
             </div>
         </section>
 
@@ -184,9 +186,9 @@
             <div class="triangle-pointer"></div>
         </button>
         <div class="nav-pills-wrapper">
-            <button class="pill-btn active" data-target="view-home">Home</button>
             <button class="pill-btn" data-target="view-taskly">Taskly</button>
             <button class="pill-btn" data-target="view-boardly">Boardly</button>
+            <button class="pill-btn active" data-target="view-home"><span>🏠</span> Home</button>
             <button class="pill-btn" data-target="view-timely">Timely</button>
             <button class="pill-btn" data-target="view-brainly">Brainly</button>
         </div>
@@ -196,29 +198,44 @@
         <div class="trash-icon">🗑️</div>
     </div>
 
+    <!-- LifeOS Intelligence Assistant Container Module -->
     <div class="lifeos-assistant" id="lifeosAssistant">
-        <button class="assistant-trigger" id="assistantTrigger">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="3"></circle>
-                <ellipse cx="12" cy="12" rx="9" ry="3" transform="rotate(45 12 12)"></ellipse>
-                <ellipse cx="12" cy="12" rx="9" ry="3" transform="rotate(135 12 12)"></ellipse>
-            </svg>
+        <!-- Bottom Balanced Assistant Trigger containing the matching rotating vector system -->
+        <button class="assistant-trigger" id="assistantTrigger" title="Toggle Assistant Panel">
+            <div class="atom-logo">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1">
+                    <circle cx="12" cy="12" r="2"></circle>
+                    <ellipse cx="12" cy="12" rx="9" ry="2.5" transform="rotate(30 12 12)"></ellipse>
+                    <ellipse cx="12" cy="12" rx="8" ry="3" transform="rotate(90 12 12)"></ellipse>
+                    <ellipse cx="12" cy="12" rx="7.5" ry="3.5" transform="rotate(150 12 12)"></ellipse>
+                </svg>
+            </div>
         </button>
         <div class="assistant-panel" id="assistantPanel">
             <div class="assistant-header">
                 <span>LifeOS Intelligence Engine</span>
-                <div class="assistant-modes">
-                    <button class="mode-pill active" id="modeChat">Chat</button>
-                    <button class="mode-pill" id="modeVoice">Voice</button>
-                    <button class="mode-pill" id="modeCmd">Cmd</button>
-                </div>
             </div>
             <div class="assistant-body" id="assistantOutput">
-                <p class="system-msg">System initialized. Ready for query, voice transcription routing, or direct workspace actions.</p>
+                <p class="system-msg">System initialized. Ready for context routing, voice synthesis, or command parse execution.</p>
             </div>
+            <!-- Unified Inline Textarea Bar Footer -->
             <div class="assistant-footer">
-                <input type="text" id="assistantInput" placeholder="Ask AI or declare cross-tool command...">
-                <button id="assistantSubmit">➔</button>
+                <input type="text" id="assistantInput" placeholder="Ask AI engine or type system action...">
+                <!-- Inline Voice Toggle Icon Button -->
+                <button class="assistant-icon-btn voice-btn" id="assistantVoiceBtn" title="Toggle Voice Stream Mode">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                        <line x1="12" y1="19" x2="12" y2="22"></line>
+                    </svg>
+                </button>
+                <!-- Inline Submit Command Icon Button -->
+                <button class="assistant-icon-btn submit-btn" id="assistantSubmit" title="Execute Pipeline">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
