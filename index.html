@@ -4,186 +4,238 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LifeOS</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
-<body class="route-home">
+<body>
 
-    <header class="system-header">
-        <div class="header-brand">LifeOS</div>
-        <button class="matrix-trigger" id="matrixTrigger" aria-label="Open Options Matrix">
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-        </button>
+    <header class="navbar">
+        <div class="nav-left">
+            <div class="atom-logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <ellipse cx="12" cy="12" rx="9" ry="3" transform="rotate(30 12 12)"></ellipse>
+                    <ellipse cx="12" cy="12" rx="9" ry="3" transform="rotate(90 12 12)"></ellipse>
+                    <ellipse cx="12" cy="12" rx="9" ry="3" transform="rotate(150 12 12)"></ellipse>
+                </svg>
+            </div>
+            <span class="brand-name">LifeOS</span>
+        </div>
+        <div class="nav-right">
+            <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <button id="btnSync">Sync Devices (Placeholder)</button>
+                <button id="btnDownload">Download Data (JSON)</button>
+                <button id="btnClear" class="danger">Clear Storage</button>
+            </div>
+        </div>
     </header>
 
-    <div class="interaction-node-container">
-        <button class="lifeos-primary-btn" id="lifeosBtn" aria-label="Activate LifeOS Engine">
-            <span class="btn-core-pulse"></span>
-        </button>
+    <button class="universal-btn" id="universalBtn" title="Open Universal Board">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="12" r="6"></circle>
+            <circle cx="12" cy="12" r="2"></circle>
+        </svg>
+    </button>
+
+    <div class="universal-board" id="universalBoard">
+        <div class="ub-header">
+            <h3>Universal Board Inbox</h3>
+            <button id="closeUbBtn">&times;</button>
+        </div>
+        <div class="ub-dropzone dropzone" id="ubDropzone" data-container="universal-board">
+            </div>
+    </div>
+
+    <main class="app-container" id="appContainer">
         
-        <div class="modal-interaction-pane" id="interactionPane" hidden>
-            <nav class="mode-selector-pill">
-                <button class="mode-pill-btn active" data-mode="chat">Chat</button>
-                <button class="mode-pill-btn" data-mode="voice">Voice</button>
-                <button class="mode-pill-btn" data-mode="command">Command</button>
-            </nav>
-            
-            <div class="pane-content-viewport">
-                <div class="mode-stream-container" id="modeStreamContainer">
-                    <div class="chat-terminal-view" id="chatTerminal">
-                        <div class="terminal-log" id="terminalLog"></div>
-                        <div class="terminal-input-wrapper">
-                            <input type="text" id="terminalInput" placeholder="Synthesize across your workspace..." autocomplete="off">
-                        </div>
-                    </div>
-                </div>
+        <section class="view active" id="view-home">
+            <div class="hero-section">
+                <div class="clock-display" id="clock">00:00:00</div>
+                <div class="date-display" id="date">Wednesday, June 24, 2026</div>
+                <div class="weather-display" id="weather">☀️ 24°C Sunny</div>
             </div>
-        </div>
-    </div>
-
-    <div class="dock-launcher-wrapper" id="dockLauncher">
-        <div class="dock-edge-trigger">
-            <span class="trigger-arrow">◀</span>
-        </div>
-        <nav class="dock-menu-pills">
-            <button class="route-pill active" data-route="home">Home</button>
-            <button class="route-pill" data-route="taskly">Taskly</button>
-            <button class="route-pill" data-route="boardly">Boardly</button>
-            <button class="route-pill" data-route="timely">Timely</button>
-            <button class="route-pill" data-route="brainly">Brainly</button>
-        </nav>
-    </div>
-
-    <div class="global-trash-zone" id="globalTrashZone" role="img" aria-label="Drag elements here to purge storage data">
-        <div class="trash-dashed-ring">
-            <span class="trash-icon">×</span>
-        </div>
-    </div>
-
-    <main class="app-workspace-surface" id="workspaceSurface">
-
-        <section class="view-panel active" id="view-home">
-            <div class="home-foyer-display">
-                <div class="foyer-clock" id="foyerClock">00:00</div>
-                <div class="foyer-metrics" id="foyerMetrics">Systems Normalized. Ready to Execute.</div>
+            <div class="dashboard-grid">
+                <div class="dash-col">
+                    <h3>Next Up</h3>
+                    <div class="dash-card-list" id="homeNextUp"></div>
+                </div>
+                <div class="dash-col">
+                    <h3>Recent Activity</h3>
+                    <div class="dash-card-list" id="homeRecentActivity"></div>
+                </div>
             </div>
         </section>
 
-        <section class="view-panel" id="view-taskly">
-            <div class="taskly-pipeline-container">
-                
-                <div class="kanban-column" data-column="todo">
-                    <div class="column-header">
-                        <span class="column-title">To Do</span>
-                        <div class="inline-input-wrapper">
-                            <input type="text" class="column-quick-add" placeholder="+ Add task...">
-                        </div>
-                    </div>
-                    <div class="column-card-stream" id="stream-todo"></div>
+        <section class="view" id="view-taskly">
+            <div class="view-header">
+                <h2>Taskly</h2>
+                <button class="btn-action" onclick="lifecycle.promptCreateCard('taskly', 'To Do')">+ Add Task</button>
+            </div>
+            <div class="kanban-board">
+                <div class="kanban-col">
+                    <div class="col-header">To Do</div>
+                    <div class="col-body dropzone" data-container="taskly-todo"></div>
                 </div>
-
-                <div class="kanban-column" data-column="inprogress">
-                    <div class="column-header">
-                        <span class="column-title">In Progress</span>
-                        <div class="inline-input-wrapper">
-                            <input type="text" class="column-quick-add" placeholder="+ Add task...">
-                        </div>
-                    </div>
-                    <div class="column-card-stream" id="stream-inprogress"></div>
+                <div class="kanban-col">
+                    <div class="col-header">In Progress</div>
+                    <div class="col-body dropzone" data-container="taskly-inprogress"></div>
                 </div>
-
-                <div class="kanban-column" data-column="review">
-                    <div class="column-header">
-                        <span class="column-title">Review</span>
-                        <div class="inline-input-wrapper">
-                            <input type="text" class="column-quick-add" placeholder="+ Add task...">
-                        </div>
-                    </div>
-                    <div class="column-card-stream" id="stream-review"></div>
+                <div class="kanban-col">
+                    <div class="col-header">Review</div>
+                    <div class="col-body dropzone" data-container="taskly-review"></div>
                 </div>
-
-                <div class="kanban-column" data-column="completed">
-                    <div class="column-header">
-                        <span class="column-title">Completed</span>
-                        <div class="inline-input-wrapper">
-                            <input type="text" class="column-quick-add" placeholder="+ Add task...">
-                        </div>
-                    </div>
-                    <div class="column-card-stream" id="stream-completed"></div>
+                <div class="kanban-col">
+                    <div class="col-header">Completed</div>
+                    <div class="col-body dropzone" data-container="taskly-completed"></div>
                 </div>
-
-                <div class="kanban-column" data-column="backlog">
-                    <div class="column-header">
-                        <span class="column-title">Backlog</span>
-                        <div class="inline-input-wrapper">
-                            <input type="text" class="column-quick-add" placeholder="+ Add task...">
-                        </div>
-                    </div>
-                    <div class="column-card-stream" id="stream-backlog"></div>
+                <div class="kanban-col">
+                    <div class="col-header">Backlog</div>
+                    <div class="col-body dropzone" data-container="taskly-backlog"></div>
                 </div>
-
             </div>
         </section>
 
-        <section class="view-panel" id="view-boardly">
+        <section class="view" id="view-boardly">
+            <div class="view-header">
+                <h2>Boardly</h2>
+                <button class="btn-action" id="addBoardlyTabBtn">+ New Category Tab</button>
+            </div>
+            <div class="boardly-tabs-bar" id="boardlyTabsBar">
+                </div>
             <div class="boardly-workspace">
-                <div class="boardly-navigation-pill-strip">
-                    <div class="boardly-tabs-slider" id="boardlyTabsSlider">
-                        </div>
+                <div class="boardly-actions">
+                    <button class="btn-action" onclick="lifecycle.promptCreateCard('boardly', null, 'goal')">🎯 + Goal</button>
+                    <button class="btn-action" onclick="lifecycle.promptCreateCard('boardly', null, 'task')">✅ + Task</button>
+                    <button class="btn-action" onclick="lifecycle.promptCreateCard('boardly', null, 'note')">📝 + Note</button>
                 </div>
-                <div class="boardly-postit-matrix" id="boardlyPostitMatrix">
+                <div class="boardly-grid dropzone" id="boardlyGrid" data-container="boardly-active-tab"></div>
+            </div>
+        </section>
+
+        <section class="view" id="view-timely">
+            <div class="view-header">
+                <h2>Timely</h2>
+                <div class="toggle-switch">
+                    <button class="toggle-btn active" id="timelyModeSched">Scheduling</button>
+                    <button class="toggle-btn" id="timelyModePlan">Planning</button>
+                </div>
+            </div>
+
+            <div id="timelySchedulingContent">
+                <div class="sub-tabs">
+                    <button class="sub-tab active" data-sub="daily">Daily</button>
+                    <button class="sub-tab" data-sub="weekly">Weekly</button>
+                    <button class="sub-tab" data-sub="monthly">Monthly</button>
+                    <button class="sub-tab" data-sub="reminders">Reminders</button>
+                </div>
+                <div class="timely-container panel-card dropzone" id="timelySchedZone" data-container="timely-sched">
+                    </div>
+            </div>
+
+            <div id="timelyPlanningContent" class="hidden">
+                <div class="sub-tabs">
+                    <button class="sub-tab active" data-sub="projects">Projects</button>
+                    <button class="sub-tab" data-sub="goals">Goals Matrix</button>
+                </div>
+                <div class="timely-container panel-card dropzone" id="timelyPlanZone" data-container="timely-plan">
                     </div>
             </div>
         </section>
 
-        <section class="view-panel" id="view-timely">
-            <div class="timely-engine-wrapper">
-                
-                <div class="timely-mode-toggle-zone">
-                    <div class="toggle-pill-switch">
-                        <button class="toggle-state-btn active" data-time-mode="schedule">Schedule Mode</button>
-                        <button class="toggle-state-btn" data-time-mode="planning">Planning Mode</button>
-                    </div>
+        <section class="view" id="view-brainly">
+            <div class="view-header">
+                <h2>Brainly</h2>
+                <div class="brainly-top-center">
+                    <input type="text" id="brainlySearch" placeholder="🔍 Search notes, folders, and links...">
                 </div>
-
-                <div class="timely-view-viewport" id="timelyViewport">
-                    </div>
-
+                <div class="brainly-actions">
+                    <button class="btn-action" id="brainlyNewNoteBtn">📝 New Note</button>
+                    <button class="btn-action" id="brainlyNewFolderBtn">📁 New Folder</button>
+                </div>
             </div>
-        </section>
-
-        <section class="view-panel" id="view-brainly">
-            <div class="brainly-canvas-environment" id="brainlyCanvas">
-                
-                <div class="brainly-ingestion-square" id="ingestionSquare">
-                    <div class="ingestion-inner-frame">
-                        <span class="ingestion-icon">📂</span>
-                        <span class="ingestion-label">Drop Links / PDFs</span>
+            
+            <div class="brainly-layout">
+                <div class="brainly-sidebar">
+                    <div class="my-links-box" id="myLinksBox">
+                        <h4>My Links (Google Drive Connect)</h4>
+                        <input type="text" id="linkInput" placeholder="Paste URL & press Enter...">
+                        <ul class="links-list" id="linksList"></ul>
+                    </div>
+                    <div class="folders-box">
+                        <h4>Folders</h4>
+                        <div id="foldersList"></div>
                     </div>
                 </div>
-
-                <div class="brainly-asset-surface" id="brainlyAssetSurface">
+                <div class="brainly-main dropzone" id="brainlyMainZone" data-container="brainly-notes">
                     </div>
-
             </div>
         </section>
 
     </main>
 
-    <div class="options-matrix-overlay" id="optionsMatrix" hidden>
-        <div class="matrix-card-panel">
-            <h2 class="matrix-heading">Options Matrix</h2>
-            <hr class="matrix-divider">
-            <div class="matrix-settings-grid">
+    <nav class="side-navigator" id="sideNavigator">
+        <button class="nav-toggle-trigger" id="navToggleTrigger" aria-label="Toggle Navigation">
+            <div class="triangle-pointer"></div>
+        </button>
+        <div class="nav-pills-wrapper">
+            <button class="pill-btn active" data-target="view-home">Home</button>
+            <button class="pill-btn" data-target="view-taskly">Taskly</button>
+            <button class="pill-btn" data-target="view-boardly">Boardly</button>
+            <button class="pill-btn" data-target="view-timely">Timely</button>
+            <button class="pill-btn" data-target="view-brainly">Brainly</button>
+        </div>
+    </nav>
+
+    <div class="global-trash-bin" id="globalTrashBin">
+        <div class="trash-icon">🗑️</div>
+    </div>
+
+    <div class="lifeos-assistant" id="lifeosAssistant">
+        <button class="assistant-trigger" id="assistantTrigger">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"></circle>
+                <ellipse cx="12" cy="12" rx="9" ry="3" transform="rotate(45 12 12)"></ellipse>
+                <ellipse cx="12" cy="12" rx="9" ry="3" transform="rotate(135 12 12)"></ellipse>
+            </svg>
+        </button>
+        <div class="assistant-panel" id="assistantPanel">
+            <div class="assistant-header">
+                <span>LifeOS Intelligence Engine</span>
+                <div class="assistant-modes">
+                    <button class="mode-pill active" id="modeChat">Chat</button>
+                    <button class="mode-pill" id="modeVoice">Voice</button>
+                    <button class="mode-pill" id="modeCmd">Cmd</button>
                 </div>
+            </div>
+            <div class="assistant-body" id="assistantOutput">
+                <p class="system-msg">System initialized. Ready for query, voice transcription routing, or direct workspace actions.</p>
+            </div>
+            <div class="assistant-footer">
+                <input type="text" id="assistantInput" placeholder="Ask AI or declare cross-tool command...">
+                <button id="assistantSubmit">➔</button>
+            </div>
         </div>
     </div>
 
-    <script src="js/taskly.js"></script>
-    <script src="js/boardly.js"></script>
-    <script src="js/timely.js"></script>
-    <script src="js/brainly.js"></script>
-    <script src="js/app.js"></script>
+    <div class="modal-overlay" id="cardModal">
+        <div class="modal-content">
+            <h3>Modify Item Elements</h3>
+            <input type="text" id="modalCardTitle" placeholder="Title">
+            <textarea id="modalCardDesc" rows="4" placeholder="Description / Markdown Segment"></textarea>
+            <input type="hidden" id="modalCardId">
+            <div class="modal-actions">
+                <button class="btn-action secondary" id="modalCloseBtn">Cancel</button>
+                <button class="btn-action" id="modalSaveBtn">Save Modifications</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
 </body>
 </html>
