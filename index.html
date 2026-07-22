@@ -3,255 +3,342 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LifeOS</title>
+    <title>Sedi / LifeOS 6.0</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <header class="navbar">
-        <div class="nav-left">
-            <!-- Top Re-engineered Micro Thin Multi-Ring Atom Logo Container -->
-            <div class="atom-logo">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1">
-                    <circle cx="12" cy="12" r="2"></circle>
-                    <ellipse cx="12" cy="12" rx="9" ry="2.5" transform="rotate(30 12 12)"></ellipse>
-                    <ellipse cx="12" cy="12" rx="8" ry="3" transform="rotate(90 12 12)"></ellipse>
-                    <ellipse cx="12" cy="12" rx="7.5" ry="3.5" transform="rotate(150 12 12)"></ellipse>
+    <!-- BEGIN HTML-ZONE-1: Global Layout & Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <svg class="brand-atom-logo" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(0 12 12)"></ellipse>
+                <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"></ellipse>
+                <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"></ellipse>
+            </svg>
+            <span class="brand-title">LifeOS</span>
+        </div>
+
+        <div class="nav-controls">
+            <button id="universalBtn" class="universal-trigger-btn" title="Toggle Universal Board">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <path d="M12 3a9 9 0 0 0 0 18w"></path>
+                    <path d="M12 8v8M8 12h8"></path>
                 </svg>
-            </div>
-            <span class="brand-name">LifeOS</span>
-        </div>
-        <div class="nav-right">
-            <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
-                <span></span><span></span><span></span>
             </button>
-            <div class="dropdown-menu" id="dropdownMenu">
-                <button id="btnSync">Sync Devices (Placeholder)</button>
-                <button id="btnDownload">Download Data (JSON)</button>
-                <button id="btnClear" class="danger">Clear Storage</button>
+            <button id="hamburgerBtn" class="hamburger-btn" title="Menu">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Drawer Menu -->
+        <div id="drawerMenu" class="drawer-menu hidden">
+            <button id="syncDevicesBtn" class="drawer-item">
+                <span>Sync Devices</span>
+                <small>Cloud / Local</small>
+            </button>
+            <button id="downloadDataBtn" class="drawer-item">
+                <span>Download Data</span>
+                <small>.JSON Export</small>
+            </button>
+            <button id="clearStorageBtn" class="drawer-item danger">
+                <span>Clear Storage</span>
+                <small>Reset System</small>
+            </button>
+        </div>
+
+        <!-- Universal Staging Board -->
+        <div id="universalBoard" class="universal-board collapsed">
+            <div class="universal-board-header">
+                <div class="ub-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle></svg>
+                    <span>Universal Staging Board</span>
+                </div>
+                <div class="ub-actions">
+                    <button id="addUniversalCardBtn" class="icon-btn-sm">+</button>
+                    <button id="closeUniversalBoardBtn" class="icon-btn-sm">&times;</button>
+                </div>
+            </div>
+            <div id="universalCardContainer" class="universal-card-container drop-zone" data-tool="universal">
+                <!-- Staged Universal Cards Render Here -->
             </div>
         </div>
-    </header>
+    </nav>
+    <!-- END HTML-ZONE-1 -->
 
-    <button class="universal-btn" id="universalBtn" title="Open Universal Board">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"></circle>
-            <circle cx="12" cy="12" r="6"></circle>
-            <circle cx="12" cy="12" r="2"></circle>
-        </svg>
-    </button>
 
-    <div class="universal-board" id="universalBoard">
-        <div class="ub-header">
-            <div class="ub-header-left">
-                <h3>Universal Board Inbox</h3>
-                <button class="btn-create-circle" onclick="lifecycle.promptCreateCard('universal-board')" title="Create Universal Card">+</button>
-            </div>
-            <button id="closeUbBtn">&times;</button>
-        </div>
-        <div class="ub-dropzone dropzone" id="ubDropzone" data-container="universal-board"></div>
-    </div>
+    <!-- MAIN APPLICATION VIEWPORT -->
+    <main class="app-viewport">
 
-    <main class="app-container" id="appContainer">
-        
+        <!-- BEGIN HTML-ZONE-2: Home Module -->
         <section class="view active" id="view-home">
-            <div class="hero-section">
-                <div class="clock-display" id="clock">00:00:00</div>
-                <div class="date-display" id="date">Wednesday, June 24, 2026</div>
-                <div class="weather-display" id="weather">☀️ 24°C Sunny</div>
-            </div>
-            <div class="dashboard-grid">
-                <div class="dash-col">
-                    <h3>Next Up</h3>
-                    <div class="dash-card-list" id="homeNextUp"></div>
+            <div class="home-sky-wrapper">
+                <div class="hero-clock-card">
+                    <div id="clockTime" class="clock-time">12:00 PM</div>
+                    <div id="clockDate" class="clock-date">Monday, June 25, 2026</div>
+                    <div id="weatherWidget" class="weather-widget">
+                        <span class="weather-icon">☀️</span>
+                        <span class="weather-temp">22°C</span>
+                        <span class="weather-desc">Sunny</span>
+                    </div>
                 </div>
-                <div class="dash-col">
-                    <h3>Recent Activity</h3>
-                    <div class="dash-card-list" id="homeRecentActivity"></div>
+
+                <div class="home-columns-container">
+                    <!-- Column A: Next Up -->
+                    <div class="home-column">
+                        <div class="home-column-header" id="headerNextUp">
+                            <h3>Next Up</h3>
+                            <span class="badge" id="countNextUp">0</span>
+                        </div>
+                        <div id="containerNextUp" class="home-card-stack">
+                            <!-- Max 3 items dynamically rendered -->
+                        </div>
+                    </div>
+
+                    <!-- Column B: Recent Activity -->
+                    <div class="home-column">
+                        <div class="home-column-header" id="headerRecentActivity">
+                            <h3>Recent Activity</h3>
+                            <span class="badge" id="countRecent">0</span>
+                        </div>
+                        <div id="containerRecentActivity" class="home-card-stack">
+                            <!-- Max 3 items dynamically rendered -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
+        <!-- END HTML-ZONE-2 -->
 
+
+        <!-- BEGIN HTML-ZONE-3: Taskly Kanban Module -->
         <section class="view" id="view-taskly">
-            <div class="view-header">
-                <h2>Taskly</h2>
-                <button class="btn-action" onclick="lifecycle.promptCreateCard('taskly', 'To Do')">+ Add Task</button>
-            </div>
-            <div class="kanban-board">
-                <div class="kanban-col">
-                    <div class="col-header">To Do</div>
-                    <div class="col-body dropzone" data-container="taskly-todo"></div>
+            <div class="taskly-workspace">
+                <div class="workspace-header">
+                    <h2>Taskly Velocity</h2>
+                    <button class="btn-primary" onclick="promptCreateCard('taskly')">+ New Task</button>
                 </div>
-                <div class="kanban-col">
-                    <div class="col-header">In Progress</div>
-                    <div class="col-body dropzone" data-container="taskly-inprogress"></div>
-                </div>
-                <div class="kanban-col">
-                    <div class="col-header">Review</div>
-                    <div class="col-body dropzone" data-container="taskly-review"></div>
-                </div>
-                <div class="kanban-col">
-                    <div class="col-header">Completed</div>
-                    <div class="col-body dropzone" data-container="taskly-completed"></div>
-                </div>
-                <div class="kanban-col">
-                    <div class="col-header">Backlog</div>
-                    <div class="col-body dropzone" data-container="taskly-backlog"></div>
+                <div class="kanban-board">
+                    <div class="kanban-column drop-zone" data-tool="taskly" data-column="todo">
+                        <div class="column-header"><span>To Do</span><span class="col-count">0</span></div>
+                        <div class="kanban-cards-container" id="col-todo"></div>
+                    </div>
+                    <div class="kanban-column drop-zone" data-tool="taskly" data-column="in-progress">
+                        <div class="column-header"><span>In Progress</span><span class="col-count">0</span></div>
+                        <div class="kanban-cards-container" id="col-in-progress"></div>
+                    </div>
+                    <div class="kanban-column drop-zone" data-tool="taskly" data-column="review">
+                        <div class="column-header"><span>Review</span><span class="col-count">0</span></div>
+                        <div class="kanban-cards-container" id="col-review"></div>
+                    </div>
+                    <div class="kanban-column drop-zone" data-tool="taskly" data-column="completed">
+                        <div class="column-header"><span>Completed</span><span class="col-count">0</span></div>
+                        <div class="kanban-cards-container" id="col-completed"></div>
+                    </div>
+                    <div class="kanban-column drop-zone" data-tool="taskly" data-column="backlog">
+                        <div class="column-header"><span>Backlog</span><span class="col-count">0</span></div>
+                        <div class="kanban-cards-container" id="col-backlog"></div>
+                    </div>
                 </div>
             </div>
         </section>
+        <!-- END HTML-ZONE-3 -->
 
+
+        <!-- BEGIN HTML-ZONE-4: Boardly Workspace Module -->
         <section class="view" id="view-boardly">
-            <div class="view-header">
-                <h2>Boardly</h2>
-                <button class="btn-action" id="addBoardlyTabBtn">+ New Category Tab</button>
-            </div>
-            <div class="boardly-tabs-bar" id="boardlyTabsBar"></div>
             <div class="boardly-workspace">
-                <div class="boardly-actions">
-                    <button class="btn-action" onclick="lifecycle.promptCreateCard('boardly', null, 'goal')">🎯 + Goal</button>
-                    <button class="btn-action" onclick="lifecycle.promptCreateCard('boardly', null, 'task')">✅ + Task</button>
-                    <button class="btn-action" onclick="lifecycle.promptCreateCard('boardly', null, 'note')">📝 + Note</button>
+                <div class="boardly-tabs-bar">
+                    <div id="boardlyTabsList" class="tabs-scroll-container">
+                        <!-- Capped at 10 categories (Health, Relationships, Work, Chores, Admin) -->
+                    </div>
+                    <button class="btn-secondary-sm" id="addBoardlyTabBtn">+ Category</button>
                 </div>
-                <div class="boardly-grid dropzone" id="boardlyGrid" data-container="boardly-active-tab"></div>
+                <div id="boardlyCanvas" class="boardly-canvas drop-zone" data-tool="boardly">
+                    <!-- Free-form absolute positioned sticky items -->
+                </div>
             </div>
         </section>
+        <!-- END HTML-ZONE-4 -->
 
+
+        <!-- BEGIN HTML-ZONE-5: Timely Matrix Module -->
         <section class="view" id="view-timely">
-            <div class="view-header">
-                <div class="header-title-wrapper">
-                    <h2>Timely</h2>
-                    <button class="btn-create-circle" onclick="lifecycle.promptCreateCard('timely-sched')" title="Create Timely Item">+</button>
+            <div class="timely-workspace">
+                <div class="timely-top-controls">
+                    <div class="mode-toggle">
+                        <button id="modeSchedulingBtn" class="toggle-btn active">Scheduling</button>
+                        <button id="modePlanningBtn" class="toggle-btn">Planning</button>
+                    </div>
+                    <div class="sub-nav-tabs" id="schedulingTabs">
+                        <button class="sub-tab active" data-subview="daily">Daily</button>
+                        <button class="sub-tab" data-subview="weekly">Weekly</button>
+                        <button class="sub-tab" data-subview="monthly">Monthly</button>
+                        <button class="sub-tab" data-subview="reminders">Reminders</button>
+                    </div>
+                    <div class="sub-nav-tabs hidden" id="planningTabs">
+                        <button class="sub-tab active" data-subview="projects">Projects</button>
+                        <button class="sub-tab" data-subview="goals">Goals</button>
+                    </div>
                 </div>
-                <div class="toggle-switch">
-                    <button class="toggle-btn active" id="timelyModeSched">Scheduling</button>
-                    <button class="toggle-btn" id="timelyModePlan">Planning</button>
-                </div>
-            </div>
 
-            <div id="timelySchedulingContent">
-                <div class="sub-tabs">
-                    <button class="sub-tab active" data-sub="daily">Daily</button>
-                    <button class="sub-tab" data-sub="weekly">Weekly</button>
-                    <button class="sub-tab" data-sub="monthly">Monthly</button>
-                    <button class="sub-tab" data-sub="reminders">Reminders</button>
+                <!-- Scheduling Subviews -->
+                <div id="timelySchedulingContainer" class="timely-view-container">
+                    <div id="subview-daily" class="timely-subview active">
+                        <div class="daily-time-grid drop-zone" data-tool="timely" data-subview="daily"></div>
+                    </div>
+                    <div id="subview-weekly" class="timely-subview hidden">
+                        <div class="weekly-columns-grid drop-zone" data-tool="timely" data-subview="weekly"></div>
+                    </div>
+                    <div id="subview-monthly" class="timely-subview hidden">
+                        <div class="monthly-calendar-grid drop-zone" data-tool="timely" data-subview="monthly"></div>
+                    </div>
+                    <div id="subview-reminders" class="timely-subview hidden">
+                        <div class="reminders-board drop-zone" data-tool="timely" data-subview="reminders"></div>
+                    </div>
                 </div>
-                <div class="timely-container panel-card dropzone" id="timelySchedZone" data-container="timely-sched"></div>
-            </div>
 
-            <div id="timelyPlanningContent" class="hidden">
-                <div class="sub-tabs">
-                    <button class="sub-tab active" data-sub="projects">Projects</button>
-                    <button class="sub-tab" data-sub="goals">Goals Matrix</button>
+                <!-- Planning Subviews -->
+                <div id="timelyPlanningContainer" class="timely-view-container hidden">
+                    <div class="planning-carousel-wrapper">
+                        <button id="carouselPrevBtn" class="carousel-nav-btn">&blackleft;</button>
+                        <div id="planningContainersTrack" class="planning-containers-track">
+                            <!-- Dynamic Unified 3-Container Carousel -->
+                        </div>
+                        <button id="carouselNextBtn" class="carousel-nav-btn">&blackright;</button>
+                        <button id="addPlanningContainerBtn" class="btn-primary-sm">+</button>
+                    </div>
                 </div>
-                <div class="timely-container panel-card dropzone" id="timelyPlanZone" data-container="timely-plan"></div>
             </div>
         </section>
+        <!-- END HTML-ZONE-5 -->
 
+
+        <!-- BEGIN HTML-ZONE-6: Brainly Engine Module -->
         <section class="view" id="view-brainly">
-            <div class="view-header">
-                <h2>Brainly</h2>
-                <div class="brainly-top-center">
-                    <input type="text" id="brainlySearch" placeholder="🔍 Search notes, folders, and links...">
-                </div>
-                <div class="brainly-actions">
-                    <button class="btn-action" id="brainlyNewNoteBtn">📝 New Note</button>
-                    <button class="btn-action" id="brainlyNewFolderBtn">📁 New Folder</button>
-                </div>
-            </div>
-            
-            <div class="brainly-layout">
-                <div class="brainly-sidebar">
-                    <div class="my-links-box" id="myLinksBox">
-                        <h4>My Links (Google Drive Connect)</h4>
-                        <input type="text" id="linkInput" placeholder="Paste URL & press Enter...">
-                        <ul class="links-list" id="linksList"></ul>
+            <div class="brainly-workspace">
+                <div class="brainly-header">
+                    <div class="brainly-search-bar">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" id="brainlySearchInput" placeholder="Search notes, links, folders...">
                     </div>
-                    <div class="folders-box">
-                        <h4>Folders</h4>
-                        <div id="foldersList"></div>
+                    <div class="brainly-actions">
+                        <button class="btn-secondary-sm" id="newBrainlyNoteBtn">+ Note</button>
+                        <button class="btn-secondary-sm" id="newBrainlyFolderBtn">+ Folder</button>
                     </div>
                 </div>
-                <div class="brainly-main dropzone" id="brainlyMainZone" data-container="brainly-notes"></div>
+                <div class="brainly-body">
+                    <!-- Fixed My Links Area -->
+                    <div class="my-links-dashboard" id="myLinksDashboard">
+                        <div class="links-header">
+                            <h4>My Links</h4>
+                            <button id="addLinkBtn" class="icon-btn-xs">+</button>
+                        </div>
+                        <div class="links-container drop-zone" id="linksContainer" data-tool="brainly" data-folder="links"></div>
+                    </div>
+                    <!-- Absolute Freeform Notes & Folders Canvas -->
+                    <div class="brainly-canvas drop-zone" id="brainlyCanvas" data-tool="brainly"></div>
+                </div>
             </div>
         </section>
+        <!-- END HTML-ZONE-6 -->
 
     </main>
 
-    <nav class="side-navigator" id="sideNavigator">
-        <button class="nav-toggle-trigger" id="navToggleTrigger" aria-label="Toggle Navigation">
+
+    <!-- BEGIN HTML-ZONE-7: Side Navigator & Global Trash -->
+    <nav id="sideNavigator" class="side-navigator">
+        <div class="nav-trigger-handle" id="navHandle">
             <div class="triangle-pointer"></div>
-        </button>
-        <div class="nav-pills-wrapper">
-            <button class="pill-btn" data-target="view-taskly">Taskly</button>
-            <button class="pill-btn" data-target="view-boardly">Boardly</button>
-            <button class="pill-btn active" data-target="view-home"><span>🏠</span> Home</button>
-            <button class="pill-btn" data-target="view-timely">Timely</button>
-            <button class="pill-btn" data-target="view-brainly">Brainly</button>
+        </div>
+        <div class="nav-pills-panel hidden" id="navPillsPanel">
+            <button class="nav-pill" data-target="view-taskly">Taskly</button>
+            <button class="nav-pill" data-target="view-boardly">Boardly</button>
+            <button class="nav-pill nav-pill-home" data-target="view-home" title="Home">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </button>
+            <button class="nav-pill" data-target="view-timely">Timely</button>
+            <button class="nav-pill" data-target="view-brainly">Brainly</button>
         </div>
     </nav>
 
-    <div class="global-trash-bin" id="globalTrashBin">
-        <div class="trash-icon">🗑️</div>
+    <!-- Global Trash Bin -->
+    <div id="globalTrashBin" class="global-trash-bin drop-zone" title="Drag cards here to delete">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+        </svg>
     </div>
+    <!-- END HTML-ZONE-7 -->
 
-    <!-- LifeOS Intelligence Assistant Container Module -->
-    <div class="lifeos-assistant" id="lifeosAssistant">
-        <!-- Bottom Balanced Assistant Trigger containing the matching rotating vector system -->
-        <button class="assistant-trigger" id="assistantTrigger" title="Toggle Assistant Panel">
-            <div class="atom-logo">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1">
-                    <circle cx="12" cy="12" r="2"></circle>
-                    <ellipse cx="12" cy="12" rx="9" ry="2.5" transform="rotate(30 12 12)"></ellipse>
-                    <ellipse cx="12" cy="12" rx="8" ry="3" transform="rotate(90 12 12)"></ellipse>
-                    <ellipse cx="12" cy="12" rx="7.5" ry="3.5" transform="rotate(150 12 12)"></ellipse>
-                </svg>
-            </div>
+
+    <!-- BEGIN HTML-ZONE-8: Intelligence Assistant & Modals -->
+    <!-- Floating Assistant -->
+    <div id="lifeosAssistant" class="assistant-token">
+        <button id="assistantTriggerBtn" class="assistant-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"></circle>
+                <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(0 12 12)"></ellipse>
+                <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"></ellipse>
+                <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"></ellipse>
+            </svg>
         </button>
-        <div class="assistant-panel" id="assistantPanel">
+        <div id="assistantPanel" class="assistant-panel hidden">
             <div class="assistant-header">
-                <span>LifeOS Intelligence Engine</span>
+                <span>LifeOS Assistant</span>
+                <button id="closeAssistantBtn" class="icon-btn-xs">&times;</button>
             </div>
-            <div class="assistant-body" id="assistantOutput">
-                <p class="system-msg">System initialized. Ready for context routing, voice synthesis, or command parse execution.</p>
-            </div>
-            <!-- Unified Inline Textarea Bar Footer -->
-            <div class="assistant-footer">
-                <input type="text" id="assistantInput" placeholder="Ask AI engine or type system action...">
-                <!-- Inline Voice Toggle Icon Button -->
-                <button class="assistant-icon-btn voice-btn" id="assistantVoiceBtn" title="Toggle Voice Stream Mode">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
-                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                        <line x1="12" y1="19" x2="12" y2="22"></line>
-                    </svg>
-                </button>
-                <!-- Inline Submit Command Icon Button -->
-                <button class="assistant-icon-btn submit-btn" id="assistantSubmit" title="Execute Pipeline">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="22" y1="2" x2="11" y2="13"></line>
-                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                    </svg>
-                </button>
+            <div id="assistantChatLog" class="assistant-chat-log"></div>
+            <div class="assistant-input-bar">
+                <input type="text" id="assistantInput" placeholder="Ask or command LifeOS...">
+                <button id="voiceStreamBtn" class="icon-btn-sm" title="Voice Input">🎤</button>
+                <button id="sendAssistantBtn" class="icon-btn-sm">&rarr;</button>
             </div>
         </div>
     </div>
 
-    <div class="modal-overlay" id="cardModal">
-        <div class="modal-content">
-            <h3>Modify Item Elements</h3>
-            <input type="text" id="modalCardTitle" placeholder="Title">
-            <textarea id="modalCardDesc" rows="4" placeholder="Description / Markdown Segment"></textarea>
-            <input type="hidden" id="modalCardId">
-            <div class="modal-actions">
-                <button class="btn-action secondary" id="modalCloseBtn">Cancel</button>
-                <button class="btn-action" id="modalSaveBtn">Save Modifications</button>
+    <!-- Universal Card Edit/Detail Modal -->
+    <div id="cardModal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <input type="text" id="modalCardTitle" class="modal-title-input" placeholder="Card Title">
+                <button id="closeCardModalBtn" class="icon-btn-sm">&times;</button>
+            </div>
+            <div class="modal-body">
+                <textarea id="modalCardDescription" class="modal-desc-textarea" placeholder="Add detailed notes or SMART template parameters..."></textarea>
+                <div id="modalCustomFields" class="modal-custom-fields"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="saveCardModalBtn" class="btn-primary">Save Changes</button>
             </div>
         </div>
     </div>
+
+    <!-- Generic Historical Backlog Modal -->
+    <div id="historyModal" class="modal-overlay hidden">
+        <div class="modal-card modal-card-large">
+            <div class="modal-header">
+                <h3 id="historyModalTitle">Backlog View</h3>
+                <button id="closeHistoryModalBtn" class="icon-btn-sm">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="historyModalList" class="history-list-container"></div>
+            </div>
+        </div>
+    </div>
+    <!-- END HTML-ZONE-8 -->
 
     <script src="app.js"></script>
 </body>
